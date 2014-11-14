@@ -1,4 +1,4 @@
-ghost [![Build Status](https://travis-ci.org/vsouza/ghost.svg?branch=master)](https://travis-ci.org/vsouza/ghost)
+Ghost [![Build Status](https://travis-ci.org/vsouza/ghost.svg?branch=master)](https://travis-ci.org/vsouza/ghost)
 =====
 
 Manipulate your hosts in the simplest way.
