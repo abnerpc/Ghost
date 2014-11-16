@@ -1,25 +1,29 @@
-ghost [![Build Status](https://travis-ci.org/vsouza/ghost.svg?branch=master)](https://travis-ci.org/vsouza/ghost)
+ghost [![Build Status](https://travis-ci.org/vsouza/Ghost.svg?branch=master)](https://travis-ci.org/vsouza/Ghost)
 =====
 
 Manipulate your hosts in the simplest way.
 
 ## Usage: 
 
-### Run
+**Add host**
 
-run project.
+``` ghost add {{NAME}} {{ip}} ```
 
-`make run`
+**Remove host**
 
-### Build
+``` ghost rm {{NAME}} {{ip}} ```
 
-generate a bin file.
+**Show my hosts**
 
-`make build`
+``` ghost show ```
 
-### Tests: 
+**Show my active hosts**
 
-`make tests`
+``` ghost show active ```
+
+**Show my inactive (commented) hosts**
+
+``` ghost show inactive ```
 
 ## License
 
