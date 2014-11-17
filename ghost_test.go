@@ -2,6 +2,6 @@ package main
 
 import "testing"
 
-func main() {
+func TestOpenFile(t *testing.T) {
 
 }
