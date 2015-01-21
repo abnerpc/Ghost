@@ -18,7 +18,7 @@ Manipulate your hosts in the simplest way.
 
 **Remove host**
 
-``` ghost rm {{ALIAS}} {{IP}} ```
+``` ghost rm {{ALIAS}} {{IP}} ``` or ``` ghost remove {{ALIAS}} {{IP}} ```
 
 **Show my hosts**
 
