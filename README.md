@@ -1,7 +1,6 @@
-
-![Icon](https://s3.amazonaws.com/f.cl.ly/items/371q263q2l2y0a1l0c2L/rsz_ghost.png)
-
 # Ghost [![Build Status](https://travis-ci.org/vsouza/Ghost.svg?branch=master)](https://travis-ci.org/vsouza/Ghost)
+
+<img src="https://s3.amazonaws.com/f.cl.ly/items/371q263q2l2y0a1l0c2L/rsz_ghost.png" align="right" width="250">
 
 Manipulate your hosts in the simplest way.
 
