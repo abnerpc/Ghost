@@ -4,7 +4,7 @@
 
 Manipulate your hosts in the simplest way.
 
-## Features:
+### Features:
   * Add, delete and show your hosts quickly
   * Enable or disable hosts
   * Export and share you hosts file
