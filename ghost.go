@@ -10,20 +10,29 @@ import (
 
 const (
 	file = "/etc/hosts"
+	ALL = 0
+	ACTIVE = 1
+	INACTIVE = 2
 )
 
 func main() {
+
 	app := cli.NewApp()
 
 	app.Name = "Ghost"
 	app.Usage = "Manipulate your hosts in the simplest way"
 	app.Author = "Vinicius Souza - http://github.com/vsouza"
 	app.Email = "hi@vsouza.com"
-	app.Action = func(c *cli.Context) {
-		println("Ghost")
-	}
+	app.Action = cli.ShowAppHelp
 
-	app.Commands = []cli.Command{
+	app.Commands = getCommands()
+
+	app.Run(os.Args)
+}
+
+func getCommands() []cli.Command {
+
+	return []cli.Command{
 		{
 			Name:      "add",
 			ShortName: "a",
@@ -44,88 +53,75 @@ func main() {
 			Name:      "show",
 			ShortName: "sa",
 			Usage:     "show my hosts",
-			Action: func(c *cli.Context) {
-
-				if c.Args().First() == "active" {
-					showActive()
-
-				} else if c.Args().First() == "inactive" {
-					showInative()
-
-				} else {
-					showAll()
-
-				}
-			},
+			Action:	execShow,
 		},
 	}
 
-	app.Run(os.Args)
 }
 
-func readLines(path string) ([]string, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, err
+func execShow(c *cli.Context) {
+
+	lines, success := readLines(file)
+	if ! success {
+		return
 	}
+	
+	
+	fmt.Println("===============================================================")
+
+	if c.Args().First() == "active" {
+		show(lines, ACTIVE)
+	} else if c.Args().First() == "inactive" {
+		show(lines, INACTIVE)
+	} else {
+		show(lines, ALL)
+	}
+
+	fmt.Println("===============================================================")
+}
+
+func readLines(path string) ([]string, bool) {
+	
+	file, err := os.Open(path)
+	
+	if err != nil {
+		log.Fatalf("readLines: %s", err)
+		return nil, false
+	}
+	
 	defer file.Close()
 
 	var lines []string
 	scanner := bufio.NewScanner(file)
+	
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
-	return lines, scanner.Err()
+
+	if scanner.Err() != nil {
+		log.Fatalf("readLines: %s", scanner.Err())
+		return nil, false
+	}
+	
+	return lines, true
 }
 
-func showAll() {
-	lines, err := readLines(file)
+func show(lines []string, mode int) {
+	
+	first_letter := ""
 
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	fmt.Println("===============================================================")
 	for i, line := range lines {
+		
+		first_letter = string(line[0])
+		
+		print := 
+			(mode == ALL) ||
+			(mode == ACTIVE && first_letter != "#") ||
+			(mode == INACTIVE && first_letter == "#")
+
+		if ! print { continue }
+
 		fmt.Println(i, line)
-
-		if string(line[0]) == "#" {
-			fmt.Println(i, line, "| INACTIVE")
-		}
 	}
-	fmt.Println("===============================================================")
-}
-
-func showInative() {
-	lines, err := readLines(file)
-
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	fmt.Println("===============================================================")
-	for i, line := range lines {
-		if string(line[0]) == "#" {
-			fmt.Println("|", i, line, "|")
-		}
-	}
-	fmt.Println("===============================================================")
-
-}
-
-func showActive() {
-	lines, err := readLines(file)
-
-	if err != nil {
-		log.Fatalf("readLines: %s", err)
-	}
-
-	fmt.Println("===============================================================")
-	for i, line := range lines {
-		if string(line[0]) != "#" {
-			fmt.Println("|", i, line, "|")
-		}
-	}
-	fmt.Println("===============================================================")
 
 }
